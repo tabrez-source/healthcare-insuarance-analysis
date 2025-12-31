@@ -1,7 +1,14 @@
-# Data (keep raw files out of git)
-data/**/*.csv
-data/**/*.zip
+# Raw / generated data
+data/*.csv
+data/*.fmt
+data/*.txt
+data/*error*
+data/*bulk*
+
+# Cleaned/generated files
 data/cleaned/
+data/*utf8*
+data/*sqlsafe*
 
 # Secrets
 .env
