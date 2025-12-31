@@ -1,6 +1,9 @@
 # Data files
 data/*.csv
 data/*.txt
+data/*.log
+data/*.Error.Txt
+data/*.Error.Log
 
 # Bulk / format artifacts (optional to ignore if you commit fmt)
 data/*bulk*
