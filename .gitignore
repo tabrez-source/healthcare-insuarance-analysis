@@ -1,0 +1,19 @@
+# Data (keep raw files out of git)
+data/**/*.csv
+data/**/*.zip
+data/cleaned/
+
+# Secrets
+.env
+*.env
+
+# SQL Server local files
+*.bak
+*.mdf
+*.ldf
+
+# OS / editor
+Thumbs.db
+.DS_Store
+.vscode/
+.idea/
