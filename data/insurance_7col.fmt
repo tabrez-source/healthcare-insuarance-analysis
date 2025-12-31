@@ -1,0 +1,9 @@
+14.0
+7
+1       SQLCHAR       0       50      ","     2     age         SQL_Latin1_General_CP1_CI_AS
+2       SQLCHAR       0       50      ","     3     sex         SQL_Latin1_General_CP1_CI_AS
+3       SQLCHAR       0       50      ","     4     bmi         SQL_Latin1_General_CP1_CI_AS
+4       SQLCHAR       0       50      ","     5     children    SQL_Latin1_General_CP1_CI_AS
+5       SQLCHAR       0       50      ","     6     smoker      SQL_Latin1_General_CP1_CI_AS
+6       SQLCHAR       0       50      ","     7     region      SQL_Latin1_General_CP1_CI_AS
+7       SQLCHAR       0       50      "\n"    8     charges     SQL_Latin1_General_CP1_CI_AS
