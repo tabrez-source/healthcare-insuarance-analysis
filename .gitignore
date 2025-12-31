@@ -1,26 +1,13 @@
-# Raw / generated data
+# Data files
 data/*.csv
-data/*.fmt
 data/*.txt
-data/*error*
+
+# Bulk / format artifacts (optional to ignore if you commit fmt)
 data/*bulk*
-
-# Cleaned/generated files
-data/cleaned/
-data/*utf8*
-data/*sqlsafe*
-
-# Secrets
-.env
-*.env
-
-# SQL Server local files
-*.bak
-*.mdf
-*.ldf
+data/*error*
 
 # OS / editor
-Thumbs.db
-.DS_Store
 .vscode/
 .idea/
+Thumbs.db
+.DS_Store
