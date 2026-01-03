@@ -148,20 +148,20 @@ JOIN hi_dw.dim_sex s ON s.sex_key = p.sex_key
 JOIN hi_dw.dim_smoker sm ON sm.smoker_key = p.smoker_key
 GROUP BY r.region, s.sex, sm.smoker
 ORDER BY avg_charge DESC;
-**Insight example:**
+**Insight example:**  
 Smokers consistently show significantly higher insurance charges, with variation across regions and genders.
+
+---
 
 ## Technologies Used
 
-Database: Microsoft SQL Server
+- **Database:** Microsoft SQL Server
+- **ETL:** T-SQL (BULK INSERT, MERGE, validation logic)
+- **Modeling:** OLTP and Star Schema (OLAP)
+- **Version Control:** Git, GitHub
+- **Visualization:** Power BI
 
-ETL: T-SQL (BULK INSERT, MERGE, validation logic)
-
-Modeling: OLTP and Star Schema (OLAP)
-
-Version Control: Git, GitHub
-
-Visualization: Power BI
+---
 
 ## Power BI Dashboards
 
@@ -169,58 +169,52 @@ This project includes an interactive Power BI report built on top of the SQL Ser
 
 ### Executive Overview
 
-Key KPIs including Average Charge and Smoker Premium (absolute and percentage)
-
-### Regional and demographic cost comparisons
-
-Interactive slicers for region, sex, smoker status, and year
+- Key KPIs including Average Charge and Smoker Premium (absolute and percentage)
+- Regional and demographic cost comparisons
+- Interactive slicers for region, sex, smoker status, and year
 
 ### Smoker Impact Analysis
 
-Direct comparison of smoker versus non-smoker costs
+- Direct comparison of smoker versus non-smoker costs
+- Regional and gender-based smoker cost breakdown
+- Clear identification of smoking as the primary insurance cost driver
 
-### Regional and gender-based smoker cost breakdown
-
-Clear identification of smoking as the primary insurance cost driver
+---
 
 ## Key Business Insights
 
-Smokers incur approximately three times higher insurance charges than non-smokers
+- Smokers incur approximately three times higher insurance charges than non-smokers
+- Average smoker premium is approximately **$23,000**
+- Smoking impact outweighs both gender and regional cost differences
+- Southeast and Southwest regions exhibit the highest average charges
 
-Average smoker premium is approximately $23,000
-
-Smoking impact outweighs both gender and regional cost differences
-
-Southeast and Southwest regions exhibit the highest average charges
+---
 
 ## Skills Demonstrated
 
-SQL Server OLTP and OLAP design
+- SQL Server OLTP and OLAP design
+- Data validation and ETL pipeline development
+- Star schema modeling for analytics
+- DAX measures and Power BI data modeling
+- Business-focused analytical storytelling
 
-Data validation and ETL pipeline development
-
-Star schema modeling for analytics
-
-DAX measures and Power BI data modeling
-
-Business-focused analytical storytelling
-
---- 
+---
 
 ## Repository Structure
+
 /sql
-  01_staging.sql
-  02_oltp_schema.sql
-  03_etl_stg_to_oltp.sql
-  04_dw_schema.sql
-  05_etl_oltp_to_dw.sql
+01_staging.sql
+02_oltp_schema.sql
+03_etl_stg_to_oltp.sql
+04_dw_schema.sql
+05_etl_oltp_to_dw.sql
 
 /data
-  (ignored – raw CSV files)
+(ignored – raw CSV files)
 
 /powerbi
-  powerbi-executive-overview.png
-  powerbi-smoker-impact.png
+powerbi-executive-overview.png
+powerbi-smoker-impact.png
 
 .gitignore
 README.md
@@ -229,14 +223,11 @@ README.md
 
 ## Why This Project Matters
 
-### This project demonstrates:
+This project demonstrates:
 
-Real-world data engineering and BI problem solving
+- Real-world data engineering and BI problem solving
+- Strong SQL and dimensional modeling fundamentals
+- Production-grade ETL practices
+- Clear separation of OLTP and OLAP workloads
 
-Strong SQL and dimensional modeling fundamentals
-
-Production-grade ETL practices
-
-Clear separation of OLTP and OLAP workloads
-
-It is designed to align with BI Analyst, SQL Developer, and Data Analyst roles in enterprise environments.
+It is designed to align with **BI Analyst, SQL Developer, and Data Analyst roles in enterprise environments**.
