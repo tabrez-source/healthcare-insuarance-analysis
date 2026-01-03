@@ -148,6 +148,7 @@ JOIN hi_dw.dim_sex s ON s.sex_key = p.sex_key
 JOIN hi_dw.dim_smoker sm ON sm.smoker_key = p.smoker_key
 GROUP BY r.region, s.sex, sm.smoker
 ORDER BY avg_charge DESC;
+```sql
 
 --- 
 
