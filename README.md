@@ -147,7 +147,7 @@ JOIN hi_dw.dim_region r ON r.region_key = p.region_key
 JOIN hi_dw.dim_sex s ON s.sex_key = p.sex_key
 JOIN hi_dw.dim_smoker sm ON sm.smoker_key = p.smoker_key
 GROUP BY r.region, s.sex, sm.smoker
-ORDER BY avg_charge DESC; 
+ORDER BY avg_charge DESC;
 Insight example:
 Smokers consistently show significantly higher insurance charges, with variation across regions and genders.
 
