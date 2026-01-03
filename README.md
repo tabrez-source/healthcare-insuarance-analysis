@@ -1,219 +1,227 @@
-# 🏥 Healthcare Insurance Analytics Platform (MS SQL Server + Power BI)
+1. Project Overview
 
-## 📌 Project Overview
+This project implements an end-to-end Business Intelligence (BI) and Analytics platform using Microsoft SQL Server and Power BI, designed to reflect real-world enterprise data architectures.
 
-This project demonstrates an **end-to-end Business Intelligence (BI) data pipeline** built using **MS SQL Server** and designed for **analytical reporting and visualization in Power BI**.
+The solution demonstrates the complete analytical data lifecycle—from raw data ingestion to executive-level reporting—using industry-standard modeling, validation, and visualization practices.
 
-The solution covers the complete lifecycle:
+The primary objective of this project is to showcase strong SQL, data modeling, ETL, and BI capabilities aligned with BI Analyst, SQL Developer, and Data Analyst roles.
 
-* Raw data ingestion
-* Data validation & cleansing
-* OLTP system design
-* Data warehouse (OLAP) star schema modeling
-* Analytics-ready data for BI tools
+2. Data Source
 
-The project is intentionally structured to mirror **real-world enterprise BI systems**.
+Source: Kaggle – Healthcare Insurance Dataset
 
----
+Records: 1,338
 
-## 📊 Data Source
+Attributes:
 
-* **Dataset:** Kaggle – Healthcare Insurance Dataset
-* **Records:** 1338 rows
-* **Attributes:** age, sex, bmi, children, smoker, region, insurance charges
+Age
 
----
+Sex
 
-## 🏗️ Architecture Overview
+BMI
 
-```
-CSV (Kaggle)
-   ↓
-STAGING (hi_stg)
-   ↓
-OLTP (hi_oltp)
-   ↓
-DATA WAREHOUSE / OLAP (hi_dw)
-   ↓
-Power BI (Visualization & Insights)
-```
+Number of Children
 
----
+Smoker Status
 
-## 1️⃣ Staging Layer (Raw Data Ingestion)
+Region
 
-### Purpose
+Insurance Charges
 
-* Safely ingest raw CSV data
-* Preserve original structure
-* Avoid early transformations
+3. Architecture Overview
+CSV Source (Kaggle)
+        ↓
+Staging Layer (hi_stg)
+        ↓
+OLTP Layer (hi_oltp)
+        ↓
+Data Warehouse / OLAP (hi_dw)
+        ↓
+Power BI Dashboards
 
-### Key Features
+4. Staging Layer (Raw Data Ingestion)
+Purpose
 
-* Implemented using **BULK INSERT**
-* Custom **format file** to handle column order and data types
-* Encoding and CR/LF issues handled
-* Data treated as **read-only source**
+Ingest raw CSV data without transformation
 
-### Verification
+Preserve source integrity
 
-* Rows loaded: **1338**
-* Column alignment verified
-* No data loss
+Isolate ingestion errors from downstream systems
 
----
+Implementation
 
-## 2️⃣ OLTP Layer (Validated Transactional Model)
+BULK INSERT with a custom format file
 
-### Purpose
+Explicit handling of encoding and CR/LF issues
 
-* Store clean, validated, structured data
-* Enforce data quality rules
-* Act as the system of record
+All columns stored as text to avoid early type failures
 
-### Design Highlights
+Validation
 
-* Fully normalized schema
-* Tables:
+Rows loaded: 1,338
 
-  * `person`
-  * `health_profile`
-  * `insurance_policy`
-  * `policy_charge`
-* Strong **constraints** (CHECK, FK)
-* **Indexes** for query optimization
-* **Staging lineage (`stg_row_id`)** for traceability
+Column alignment verified
 
-### ETL Highlights
+Zero data loss during ingestion
 
-* Defensive ETL using `TRY_CONVERT`
-* CR/LF cleansing for numeric fields
-* Reject logging for invalid rows
-* Rerunnable ETL logic
+5. OLTP Layer (Validated Transactional Model)
+Purpose
 
-### Results
+Act as the system of record
 
-* OLTP persons: **1338**
-* Policies: **1338**
-* Charges: **1338**
-* Rejected rows: **0**
+Enforce business rules and data quality
 
----
+Support downstream analytical workloads
 
-## 3️⃣ Data Warehouse (OLAP – Star Schema)
+Schema Design
 
-### Purpose
+Normalized OLTP schema consisting of:
 
-* Enable fast analytical queries
-* Power BI–ready dimensional model
+person
 
-### Star Schema Design
+health_profile
 
-**Dimensions**
+insurance_policy
 
-* `dim_person`
-* `dim_region`
-* `dim_sex`
-* `dim_smoker`
-* `dim_date`
+policy_charge
 
-**Fact Table**
+Key Features
 
-* `fact_insurance_charge`
+Strong CHECK constraints and foreign keys
 
-  * Grain: **1 row per policy**
+Indexed columns for performance
 
-### ETL Highlights
+Staging lineage via stg_row_id
 
-* OLTP → DW transformation
-* SCD Type-1 handling for person dimension
-* Deterministic reload strategy for facts
-* Date dimension generated dynamically
+Referential integrity with cascade rules
 
-### Results
+ETL Characteristics
 
-* Dimension rows: **1338**
-* Fact rows: **1338**
+Defensive transformations using TRY_CONVERT
 
----
+Explicit validation rules for all attributes
 
-## 🔍 Sample Analytical Insight (SQL)
+Reject logging for invalid records
 
-```sql
+Fully rerunnable ETL scripts
+
+Results
+
+Persons loaded: 1,338
+
+Policies created: 1,338
+
+Charges recorded: 1,338
+
+Rejected rows: 0
+
+6. Data Warehouse (OLAP – Star Schema)
+Purpose
+
+Enable high-performance analytical queries
+
+Provide a Power BI–optimized semantic layer
+
+Dimensional Model
+
+Dimensions
+
+dim_person
+
+dim_region
+
+dim_sex
+
+dim_smoker
+
+dim_date
+
+Fact Table
+
+fact_insurance_charge
+
+Grain: one row per insurance policy
+
+ETL Strategy
+
+Deterministic OLTP → DW transformations
+
+Type-1 slowly changing dimensions
+
+Dynamically generated date dimension
+
+Clean separation between transactional and analytical workloads
+
+Results
+
+Dimension rows: 1,338
+
+Fact rows: 1,338
+
+7. Sample Analytical Query (SQL)
 SELECT
     r.region,
     s.sex,
     sm.smoker,
     AVG(f.annual_charge) AS avg_charge
 FROM hi_dw.fact_insurance_charge f
-JOIN hi_dw.dim_person p ON p.person_key = f.person_key
-JOIN hi_dw.dim_region r ON r.region_key = p.region_key
-JOIN hi_dw.dim_sex s ON s.sex_key = p.sex_key
-JOIN hi_dw.dim_smoker sm ON sm.smoker_key = p.smoker_key
+JOIN hi_dw.dim_person p   ON p.person_key = f.person_key
+JOIN hi_dw.dim_region r   ON r.region_key = p.region_key
+JOIN hi_dw.dim_sex s      ON s.sex_key = p.sex_key
+JOIN hi_dw.dim_smoker sm  ON sm.smoker_key = p.smoker_key
 GROUP BY r.region, s.sex, sm.smoker
 ORDER BY avg_charge DESC;
-```
 
-**Insight example:**
-Smokers consistently show **significantly higher insurance charges**, with regional and gender variations.
+Key Insight:
+Smoking status is the dominant cost driver across all regions and demographics.
 
----
+8. Power BI Dashboards
 
-## 🧰 Technologies Used
+An interactive Power BI report was built directly on top of the SQL Server data warehouse.
 
-* **Database:** MS SQL Server
-* **ETL:** T-SQL (BULK INSERT, MERGE, validation logic)
-* **Modeling:** OLTP + Star Schema (OLAP)
-* **Version Control:** Git / GitHub
-* **Visualization:** Power BI (next phase)
+Executive Overview
 
----
+Overall Average Insurance Charge
 
-📈 Power BI Dashboards
+Smoker vs Non-Smoker comparison
 
-This project includes an interactive Power BI report built on top of the SQL Server data warehouse.
-
-🔹 Executive Overview
-
-Key KPIs: Average Charge, Smoker Premium ($ / %)
-
-Regional and demographic cost comparisons
+Regional and demographic cost distribution
 
 Interactive slicers for region, sex, smoker status, and year
 
-🔹 Smoker Impact Analysis
+Smoker Impact Analysis
 
-Direct comparison of smoker vs non-smoker costs
+Direct smoker vs non-smoker cost comparison
 
-Regional and gender-based smoker cost breakdown
+Regional smoker cost breakdown
 
-Highlights smoking as the primary insurance cost driver
+Gender-based smoker analysis
 
-💡 Key Business Insights
+Reinforcement of smoker premium impact
 
-Smokers incur ~3× higher insurance charges than non-smokers
+9. Business Insights
+
+Smokers incur approximately three times higher insurance charges than non-smokers
 
 Average smoker premium is approximately $23,000
 
 Smoking impact outweighs both gender and regional cost differences
 
-Southeast and Southwest regions show the highest average charges
+Southeast and Southwest regions exhibit the highest average charges
 
-🎯 Skills Demonstrated
+10. Technologies Used
 
-SQL Server OLTP & OLAP design
+Database: Microsoft SQL Server
 
-Data validation & ETL pipelines
+ETL & Validation: T-SQL (BULK INSERT, MERGE, constraints)
 
-Star schema modeling for analytics
+Modeling: OLTP and Star Schema (OLAP)
 
-DAX measures & Power BI data modeling
+BI & Analytics: Power BI, DAX
 
-Business-focused data storytelling
+Version Control: Git, GitHub
 
-## 📁 Repository Structure
-
-```
+11. Repository Structure
 /sql
   01_staging.sql
   02_oltp_schema.sql
@@ -229,19 +237,20 @@ Business-focused data storytelling
   powerbi-smoker-impact.png
 
 .gitignore
-
 README.md
-```
 
----
-
-## ⭐ Why This Project Matters
+12. Why This Project Matters
 
 This project demonstrates:
 
-* Real-world data engineering problem solving
-* Strong SQL & BI fundamentals
-* Production-grade ETL practices
-* Clear separation of OLTP vs OLAP workloads
+Real-world data engineering and BI workflows
 
-It is designed to align with **BI Analyst, SQL Developer, and Data Analyst roles**.
+Strong SQL and dimensional modeling fundamentals
+
+Production-grade ETL and validation techniques
+
+Clear separation of OLTP and OLAP systems
+
+Business-focused analytical storytelling
+
+The design and implementation closely align with expectations for BI Analyst, SQL Developer, and Data Analyst roles in enterprise environments.
