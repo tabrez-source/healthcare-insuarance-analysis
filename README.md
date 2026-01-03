@@ -169,14 +169,47 @@ Smokers consistently show **significantly higher insurance charges**, with regio
 
 ---
 
-## 🚀 Next Steps
+📈 Power BI Dashboards
 
-* Power BI semantic model
-* DAX measures (average cost, smoker impact, trends)
-* Interactive dashboards & slicers
-* Final portfolio screenshots
+This project includes an interactive Power BI report built on top of the SQL Server data warehouse.
 
----
+🔹 Executive Overview
+
+Key KPIs: Average Charge, Smoker Premium ($ / %)
+
+Regional and demographic cost comparisons
+
+Interactive slicers for region, sex, smoker status, and year
+
+🔹 Smoker Impact Analysis
+
+Direct comparison of smoker vs non-smoker costs
+
+Regional and gender-based smoker cost breakdown
+
+Highlights smoking as the primary insurance cost driver
+
+💡 Key Business Insights
+
+Smokers incur ~3× higher insurance charges than non-smokers
+
+Average smoker premium is approximately $23,000
+
+Smoking impact outweighs both gender and regional cost differences
+
+Southeast and Southwest regions show the highest average charges
+
+🎯 Skills Demonstrated
+
+SQL Server OLTP & OLAP design
+
+Data validation & ETL pipelines
+
+Star schema modeling for analytics
+
+DAX measures & Power BI data modeling
+
+Business-focused data storytelling
 
 ## 📁 Repository Structure
 
@@ -190,6 +223,12 @@ Smokers consistently show **significantly higher insurance charges**, with regio
 
 /data
   (ignored – raw CSV files)
+
+/powerbi
+  powerbi-executive-overview.png
+  powerbi-smoker-impact.png
+
+.gitignore
 
 README.md
 ```
